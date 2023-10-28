@@ -17,7 +17,7 @@ if (!$this->helpers()->has('ViteScripts')) {
 }
 
 $this->ViteScripts->script([], new ViteHelperConfig([
-    'forceProductionMode' => 0,
+    'forceProductionMode' => 1,
     'plugin' => 'FilePool',
     'development' => [
         'scriptEntries' => [
