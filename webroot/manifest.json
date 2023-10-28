@@ -1,0 +1,33 @@
+{
+  "vite/legacy-polyfills-legacy": {
+    "file": "assets/polyfills-legacy-086de4c7.js",
+    "isEntry": true,
+    "src": "vite/legacy-polyfills-legacy"
+  },
+  "webroot_src/FilePool/initFilePool-legacy.ts": {
+    "file": "assets/initFilePool-legacy-d93d90a6.js",
+    "isDynamicEntry": true,
+    "src": "webroot_src/FilePool/initFilePool-legacy.ts"
+  },
+  "webroot_src/FilePool/initFilePool.ts": {
+    "file": "assets/initFilePool-55c2c5d2.js",
+    "isDynamicEntry": true,
+    "src": "webroot_src/FilePool/initFilePool.ts"
+  },
+  "webroot_src/main-legacy.ts": {
+    "dynamicImports": [
+      "webroot_src/FilePool/initFilePool-legacy.ts"
+    ],
+    "file": "assets/main-legacy-a70bdfc4.js",
+    "isEntry": true,
+    "src": "webroot_src/main-legacy.ts"
+  },
+  "webroot_src/main.ts": {
+    "dynamicImports": [
+      "webroot_src/FilePool/initFilePool.ts"
+    ],
+    "file": "assets/main-f2895a50.js",
+    "isEntry": true,
+    "src": "webroot_src/main.ts"
+  }
+}
