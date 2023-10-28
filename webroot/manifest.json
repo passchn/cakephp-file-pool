@@ -5,19 +5,19 @@
     "src": "vite/legacy-polyfills-legacy"
   },
   "webroot_src/FilePool/initFilePool-legacy.ts": {
-    "file": "assets/initFilePool-legacy-27ee72f4.js",
+    "file": "assets/initFilePool-legacy-6d3aa979.js",
     "isDynamicEntry": true,
     "src": "webroot_src/FilePool/initFilePool-legacy.ts"
   },
   "webroot_src/FilePool/initFilePool.css": {
-    "file": "assets/initFilePool-dab755a6.css",
+    "file": "assets/initFilePool-415f6150.css",
     "src": "webroot_src/FilePool/initFilePool.css"
   },
   "webroot_src/FilePool/initFilePool.ts": {
     "css": [
-      "assets/initFilePool-dab755a6.css"
+      "assets/initFilePool-415f6150.css"
     ],
-    "file": "assets/initFilePool-7dd640ca.js",
+    "file": "assets/initFilePool-6fb1afa9.js",
     "isDynamicEntry": true,
     "src": "webroot_src/FilePool/initFilePool.ts"
   },
@@ -25,15 +25,22 @@
     "dynamicImports": [
       "webroot_src/FilePool/initFilePool-legacy.ts"
     ],
-    "file": "assets/main-legacy-b693c827.js",
+    "file": "assets/main-legacy-84bc3777.js",
     "isEntry": true,
     "src": "webroot_src/main-legacy.ts"
   },
+  "webroot_src/main.css": {
+    "file": "assets/main-ecdf2da3.css",
+    "src": "webroot_src/main.css"
+  },
   "webroot_src/main.ts": {
+    "css": [
+      "assets/main-ecdf2da3.css"
+    ],
     "dynamicImports": [
       "webroot_src/FilePool/initFilePool.ts"
     ],
-    "file": "assets/main-99ee46de.js",
+    "file": "assets/main-7bff2e41.js",
     "isEntry": true,
     "src": "webroot_src/main.ts"
   }
