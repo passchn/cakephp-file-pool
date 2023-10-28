@@ -17,6 +17,7 @@ export default defineConfig({
     build: {
         emptyOutDir: true,
         outDir: './webroot',
+        assetsDir: 'file_pool/assets',
         manifest: true,
         rollupOptions: {
             input: {
