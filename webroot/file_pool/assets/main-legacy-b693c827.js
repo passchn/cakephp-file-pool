@@ -1,0 +1,1 @@
+System.register([],(function(e,t){"use strict";return{execute:function(){(async e=>{if(!document.querySelector(e))return;const{default:r}=await(o=()=>t.import("./initFilePool-legacy-27ee72f4.js"),o());var o;r(e)})("[data-file-pool]").catch((e=>console.error(e)))}}}));
