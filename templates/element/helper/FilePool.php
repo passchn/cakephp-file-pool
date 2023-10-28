@@ -7,6 +7,9 @@
  * @var bool $allowEdit
  * @var bool $allowUpload
  */
+
+use ViteHelper\Utilities\ViteHelperConfig;
+
 ?>
 
 <fieldset class="my-6">
@@ -24,3 +27,8 @@
         data-allow-upload="<?= $allowUpload ?>"
     ></div>
 </fieldset>
+
+<?= $this->ViteScripts->script([], new ViteHelperConfig([
+    'forceProductionMode' => 1,
+    'plugin' => 'FilePool',
+])) ?>
