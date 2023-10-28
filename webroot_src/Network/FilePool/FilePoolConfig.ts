@@ -1,0 +1,3 @@
+type FilePoolConfig = {
+    allowedTypes?: string[],
+}
