@@ -24,6 +24,14 @@ class FilePoolHelper extends Helper
             'allowEdit' => $allowEdit,
             'allowUpload' => $allowUpload,
             'title' => $title,
+            'translations' => [
+                'dragAndDropText' => __d('FilePool', 'Drop file to upload'),
+                'editFile' => __d('FilePool', 'Edit file'),
+                'deleteFile' => __d('FilePool', 'Delete file'),
+                'cancelDeletion' => __d('FilePool', 'Cancel deletion'),
+                'addFile' => __d('FilePool', 'Add file'),
+                'noFiles' => __d('FilePool', 'No files'),
+            ],
         ]);
     }
 }

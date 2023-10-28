@@ -6,6 +6,7 @@
  * @var bool $allowDelete
  * @var bool $allowEdit
  * @var bool $allowUpload
+ * @var array $translations
  */
 
 use ViteHelper\Utilities\ViteHelperConfig;
@@ -25,10 +26,19 @@ use ViteHelper\Utilities\ViteHelperConfig;
         data-allow-delete="<?= $allowDelete ?>"
         data-allow-edit="<?= $allowEdit ?>"
         data-allow-upload="<?= $allowUpload ?>"
-    ></div>
+    >
+        <script data-translations type="application/json"><?= json_encode($translations) ?></script>
+    </div>
 </fieldset>
 
 <?= $this->ViteScripts->script([], new ViteHelperConfig([
-    'forceProductionMode' => 1,
+    'forceProductionMode' => 0,
     'plugin' => 'FilePool',
+    'development' => [
+        'scriptEntries' => [
+            \Cake\Core\Plugin::path('FilePool') . 'webroot_src/main.ts',
+        ],
+        // url of the vite dev server
+        'url' => 'http://localhost:3001',
+    ]
 ])) ?>
