@@ -35,6 +35,7 @@ class FilePoolHelper extends Helper
                 'cancelDeletion' => __d('FilePool', 'Cancel deletion'),
                 'addFile' => __d('FilePool', 'Add file'),
                 'noFiles' => __d('FilePool', 'No files'),
+                'openFile' => __d('FilePool', 'Open file'),
             ],
         ]);
     }

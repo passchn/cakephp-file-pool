@@ -1,10 +1,11 @@
 import { createApp } from "vue";
 import FilePool from "./FilePool.vue";
+import Translation from "../Utils/Translation";
 
 export default function initFilePool(cssSelector: string) {
     document.querySelectorAll(cssSelector).forEach(_el => {
         const el = _el as HTMLDivElement;
-        const translations = el.querySelector('[data-translations]');
+        const translations = el.querySelector('[data-translations]') as HTMLScriptElement;
         const app = createApp(FilePool, {
             owner: {
                 id: el.dataset.ownerId,
@@ -13,7 +14,7 @@ export default function initFilePool(cssSelector: string) {
             allowDelete: parseInt(el.dataset.allowDelete || '') === 1,
             allowEdit: parseInt(el.dataset.allowEdit || '') === 1,
             allowUpload: parseInt(el.dataset.allowUpload || '') === 1,
-            translations: JSON.parse(translations.textContent),
+            translations: new Translation(JSON.parse(translations.textContent || '')),
         });
         try {
             app.mount(el);

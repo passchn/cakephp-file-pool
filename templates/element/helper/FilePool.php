@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var \Cake\View\View $this
  * @var \Cake\ORM\Entity $entity
  * @var string|null $title
  * @var bool $allowDelete
@@ -11,11 +11,28 @@
 
 use ViteHelper\Utilities\ViteHelperConfig;
 
+
+if (!$this->helpers()->has('ViteScripts')) {
+    $this->addHelper('ViteHelper.ViteScripts');
+}
+
+$this->ViteScripts->script([], new ViteHelperConfig([
+    'forceProductionMode' => 0,
+    'plugin' => 'FilePool',
+    'development' => [
+        'scriptEntries' => [
+            \Cake\Core\Plugin::path('FilePool') . 'webroot_src/main.ts',
+        ],
+        // url of the vite dev server
+        'url' => 'http://localhost:3001',
+    ]
+]));
+
 ?>
 
-<fieldset class="my-6">
+<fieldset class="file-pool-wrapper">
     <?php if ($title !== null) : ?>
-        <legend class="text-2xl font-bold mb-2">
+        <legend>
             <?= $title ?>
         </legend>
     <?php endif; ?>
@@ -30,15 +47,3 @@ use ViteHelper\Utilities\ViteHelperConfig;
         <script data-translations type="application/json"><?= json_encode($translations) ?></script>
     </div>
 </fieldset>
-
-<?= $this->ViteScripts->script([], new ViteHelperConfig([
-    'forceProductionMode' => 1,
-    'plugin' => 'FilePool',
-    'development' => [
-        'scriptEntries' => [
-            \Cake\Core\Plugin::path('FilePool') . 'webroot_src/main.ts',
-        ],
-        // url of the vite dev server
-        'url' => 'http://localhost:3001',
-    ]
-])) ?>

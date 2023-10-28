@@ -1,9 +1,10 @@
 <template>
     <div class="file">
         <a
-            class="inner"
+            class="file-info"
             :class="{ 'not-uploaded': !file.isUploaded, 'deleted': file.isDeleted }"
             :href="file.downloadLink || '#'"
+            :title="translations.get('openFile')"
             target="_blank"
         >
             <div>
@@ -25,31 +26,31 @@
         </a>
         <div class="actions" v-if="allowDelete">
             <a
-                :title="translations.editFile"
+                :title="translations.get('editFile')"
                 :href="file.editLink"
                 target="_blank"
                 class="action action-edit"
                 v-if="allowEdit && file.isUploaded"
             >
-                <i class="fas fa-pencil"></i>
+                <i v-html="icon(faPencil).html"></i>
             </a>
             <button
                 type="button"
                 @click="filePool.remove(file.id)"
-                :title="translations.deleteFile"
+                :title="translations.get('deleteFile')"
                 class="action action-delete"
                 v-if="file.isUploaded"
             >
-                <i class="fas fa-trash"></i>
+                <i v-html="icon(faTrash).html"></i>
             </button>
             <button
                 type="button"
                 @click="file.restore()"
-                :title="translations.cancelDeletion"
+                :title="translations.get('cancelDeletion')"
                 class="action action-restore"
                 v-if="file.isDeleted"
             >
-                <i class="fas fa-trash-restore"></i>
+                <i v-html="icon(faTrashRestore).html"></i>
             </button>
         </div>
     </div>
@@ -58,6 +59,9 @@
 <script setup lang="ts">
 import ServerFile from "../../Network/FilePool/ServerFile";
 import FilePool from "../../Network/FilePool/FilePool";
+import Translation from "../../Utils/Translation";
+import {icon} from "@fortawesome/fontawesome-svg-core";
+import {faPencil, faTrash, faTrashRestore} from "@fortawesome/free-solid-svg-icons";
 
 defineProps({
     file: {
@@ -65,7 +69,7 @@ defineProps({
         required: true,
     },
     translations: {
-        type: Object<string, any>,
+        type: Translation,
         required: true,
     },
     filePool: {
@@ -86,67 +90,66 @@ defineProps({
 <style scoped>
 .file {
     position: relative;
-}
-.inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+    border-radius: .65rem;
     border: 1px solid #777;
-    border-radius: 1rem;
-    padding: .5rem;
     background-color: #fff;
-
+    &:hover {
+        background-color: #e9f6ff;
+        border-color: dodgerblue;
+    }
+}
+.file-info {
+    display: block;
     text-decoration: none;
     color: #333;
-    display: block;
-}
-.not-uploaded {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-
-    @keyframes pulse {
-        0%, 100% {
-            opacity: 1;
-        }
-        50% {
-            opacity: .5;
-        }
-    }
-    cursor: wait;
-    opacity: 0.8;
+    padding: .5rem 1rem;
+    flex-grow: 1;
 }
 .deleted {
     border-color: #DC2626;
 }
-.action {
-    aspect-ratio: 1 / 1;
-    display: none;
-    position: absolute;
-    top: -1rem;
-    right: 0;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+.actions {
+    display: flex;
+    justify-content: flex-end;
     align-items: center;
-    border-radius: 9999px;
-    text-align: center;
-    color: #ffffff;
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-    :hover {
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    }
+    gap: .25rem;
+    padding: .15rem .25rem;
 
-    &.action-edit {
-        background-color: yellow;
+    .action {
+        background-color: whitesmoke;
+        border: 1px solid #eaeaea;
+        border-radius: .65rem;
+        padding: .15rem;
+        aspect-ratio: 1 / 1;
+        display: flex;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        &.action-delete {
+            &:hover {
+                color: #fff;
+                background-color: tomato;
+            }
+        }
+        &.action-restore {
+            color: #fff;
+            background-color: rebeccapurple;
+            &:hover {
+                background-color: purple;
+            }
+        }
+        &.action-edit {
+            &:hover {
+                background-color: #ffffc0;
+                color: orange;
+            }
+        }
     }
-    &.action-delete {
-        background-color: red;
-        right: 2.25rem;
-    }
-    &.action-restore {
-        background-color: purple;
-        right: 1.25rem;
-    }
-}
-.file:hover .action {
-    display: block;
 }
 .error {
     padding: 0.25rem;

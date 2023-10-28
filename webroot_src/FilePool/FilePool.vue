@@ -3,12 +3,8 @@
         ref="dropzoneElement"
         class="file-pool"
     >
-        <DragAndDropIndicator
-            v-if="isOverDropZone && allowUpload"
-            v-text="translations.dragAndDropText"
-        />
         <div class="files-list">
-            <File
+            <PoolFile
                 v-for="file in files"
                 :allow-edit="allowEdit"
                 :allow-delete="allowDelete"
@@ -19,10 +15,14 @@
             <AddFileButton
                 v-if="allowUpload"
                 :on-select-handler="onSelectFile"
-                :button-label="translations.addFile"
+                :button-label="translations.get('addFile')"
             />
-            <div v-if="files.length === 0 && !allowUpload" v-text="translations.noFiles"></div>
+            <div v-if="files.length === 0 && !allowUpload" v-text="translations.get('noFiles')"></div>
         </div>
+        <DragAndDropIndicator
+            v-if="isOverDropZone && allowUpload"
+            v-text="translations.get('dragAndDropText')"
+        />
     </section>
 </template>
 
@@ -34,7 +34,8 @@ import FilePool from "../Network/FilePool/FilePool";
 import useServerFiles from "../Network/FilePool/useServerFiles";
 import DragAndDropIndicator from "./components/DragAndDropIndicator.vue";
 import AddFileButton from "./components/AddFileButton.vue";
-import File from "./components/File.vue";
+import PoolFile from "./components/PoolFile.vue";
+import Translation from "../Utils/Translation";
 
 const props = defineProps({
     owner: {
@@ -55,7 +56,7 @@ const props = defineProps({
     },
     translations: {
         required: true,
-        type: Object<string, string>,
+        type: Translation,
     }
 });
 
@@ -67,7 +68,7 @@ const onDrop = (files: File[] | null) => {
     if (!props.allowUpload) {
         return;
     }
-    files?.forEach(file => {
+    files?.forEach((file) => {
         filePool.add(file);
     });
 }
@@ -86,15 +87,18 @@ const {isOverDropZone} = useDropZone(dropzoneElement, onDrop);
 <style lang="scss">
 .file-pool {
     position: relative;
-    background-color: #f5f5f5;
+    isolation: isolate;
+    background-color: #f6f6f6;
     border: 1px solid #dcdcdc;
-    border-radius: .5rem;
+    border-radius: .25rem;
 }
 
 .files-list {
+    position: relative;
+    padding: .45rem;
     display: flex;
-    padding: 1rem;
+    flex-direction: column;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: 0.45rem;
 }
 </style>

@@ -6,7 +6,7 @@
     >
         <label class="button">
             <span class="button-inner">
-                <span class="icon"><i class="fas fa-plus-square"></i></span>
+                <span class="icon" v-html="icon(faPlusSquare).html"></span>
                 <small v-text="buttonLabel"></small>
             </span>
             <input
@@ -20,6 +20,9 @@
 </template>
 
 <script setup>
+import {icon} from "@fortawesome/fontawesome-svg-core";
+import {faPlusSquare} from "@fortawesome/free-solid-svg-icons";
+
 defineProps({
     buttonLabel: {
         type: String,
@@ -38,17 +41,23 @@ defineProps({
 }
 .button {
     display: flex;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
     align-items: center;
+    justify-content: center;
     border-radius: 0.5rem;
     cursor: pointer;
+    border: 1px solid #d9d9d9;
+    background-color: #deeeff;
+    padding: .15rem .45rem;
+    &:hover {
+        background-color: #fff;
+    border: 1px solid dodgerblue;
+    }
 }
 .button-inner {
     display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.45rem;
     align-items: center;
+    max-width: max-content;
 }
 .invisible {
     position: absolute;
