@@ -1,5 +1,5 @@
 {
-  "name": "file-pool",
+  "name": "cakephp-file-pool",
   "version": "0.0.0",
   "description": "FilePool plugin for CakePHP",
   "main": "./webroot_src/main.ts",

@@ -1,5 +1,5 @@
 {
-    "name": "passchn/file-pool",
+    "name": "passchn/cakephp-file-pool",
     "description": "FilePool plugin for CakePHP",
     "type": "cakephp-plugin",
     "license": "MIT",
