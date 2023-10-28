@@ -1,0 +1,9 @@
+{
+  "name": "file-pool",
+  "version": "0.0.0",
+  "description": "FilePool plugin for CakePHP",
+  "main": "./webroot_src/initPlugin.ts",
+  "repository": "https://github.com/passchn/file-pool",
+  "author": "post@pascalschneider.eu",
+  "license": "MIT"
+}

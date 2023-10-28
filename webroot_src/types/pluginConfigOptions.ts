@@ -1,5 +1,5 @@
 export type pluginConfigOptions = {
-    filePool: {
-        cssSelector: string,
+    filePool?: {
+        cssSelector?: string,
     }
 };

@@ -1,7 +1,7 @@
 import { pluginConfigOptions } from "./types/pluginConfigOptions";
 
 export default function initPlugin(pluginOptions: pluginConfigOptions) {
-    loadFilePool(pluginOptions.filePool.cssSelector).catch(error => console.error(error));
+    loadFilePool(pluginOptions.filePool.cssSelector || '[data-file-pool]').catch(error => console.error(error));
 }
 
 const loadFilePool = async (cssSelector: string) => {
