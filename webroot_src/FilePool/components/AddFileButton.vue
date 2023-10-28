@@ -35,7 +35,7 @@ defineProps({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .form {
     display: contents;
 }

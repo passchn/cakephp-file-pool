@@ -36,6 +36,10 @@ class FilePoolHelper extends Helper
                 'addFile' => __d('FilePool', 'Add file'),
                 'noFiles' => __d('FilePool', 'No files'),
                 'openFile' => __d('FilePool', 'Open file'),
+                'title' => __d('FilePool', 'Title'),
+                'category' => __d('FilePool', 'Category'),
+                'description' => __d('FilePool', 'Description'),
+                'save' => __d('FilePool', 'Save'),
             ],
         ]);
     }

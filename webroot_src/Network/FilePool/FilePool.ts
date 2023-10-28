@@ -1,5 +1,5 @@
 import HttpRequest from "../HttpRequest/HttpRequest";
-import { AxiosError, AxiosResponse } from "axios";
+import {AxiosError, AxiosResponse} from "axios";
 import ServerFile from "./ServerFile";
 
 export default class FilePool {
@@ -61,6 +61,23 @@ export default class FilePool {
         });
 
         this.update();
+    }
+
+    public edit(fileId: string, data: FormData) {
+        return new Promise(resolve => {
+            this.handleRequest('edit', {
+                fileId: fileId,
+                title: data.get('title'),
+                description: data.get('description'),
+                category: data.get('category'),
+            }, successResponse => {
+                this.findAll();
+                resolve(true);
+            }, errorResponse => {
+                console.error(errorResponse);
+                resolve(false);
+            });
+        });
     }
 
     public findAll() {

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-10-28 23:22+0200\n"
+"POT-Creation-Date: 2023-10-29 01:02+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -40,5 +40,21 @@ msgstr ""
 
 #: ./vendor/passchn/cakephp-file-pool/src/View/Helper/FilePoolHelper.php:38
 msgid "Open file"
+msgstr ""
+
+#: ./vendor/passchn/cakephp-file-pool/src/View/Helper/FilePoolHelper.php:39
+msgid "Title"
+msgstr ""
+
+#: ./vendor/passchn/cakephp-file-pool/src/View/Helper/FilePoolHelper.php:40
+msgid "Category"
+msgstr ""
+
+#: ./vendor/passchn/cakephp-file-pool/src/View/Helper/FilePoolHelper.php:41
+msgid "Description"
+msgstr ""
+
+#: ./vendor/passchn/cakephp-file-pool/src/View/Helper/FilePoolHelper.php:42
+msgid "Save"
 msgstr ""
 

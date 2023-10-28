@@ -13,7 +13,7 @@ defineProps({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .drag-and-drop {
     display: flex;
     position: absolute;

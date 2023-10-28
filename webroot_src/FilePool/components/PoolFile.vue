@@ -3,59 +3,68 @@
         class="file"
         :class="{'--deleting': isDeleting}"
     >
-        <a
-            class="file-info"
-            :class="{ 'not-uploaded': !file.isUploaded}"
-            :href="file.downloadLink || '#'"
-            :title="translations.get('openFile')"
-            target="_blank"
-        >
-            <div>
-                <strong>{{ file.title }}</strong>
-            </div>
-            <div
-                v-if="file.type && file.size"
-                class="text-xs"
-            >
-                {{ file.type }},
-                {{ file.size }}
-            </div>
-            <div
-                class="error"
-                v-if="file.getError()"
-            >
-                {{ file.getError() }}
-            </div>
-        </a>
-        <div class="actions" v-if="allowDelete">
+        <div class="file-inner">
             <a
-                :title="translations.get('editFile')"
-                :href="file.editLink"
+                class="file-info"
+                :class="{ 'not-uploaded': !file.isUploaded}"
+                :href="file.downloadLink || '#'"
+                :title="translations.get('openFile')"
                 target="_blank"
-                class="action action-edit"
-                v-if="allowEdit && file.isUploaded"
             >
-                <i v-html="icon(faPencil).html"></i>
+                <div>
+                    <strong>{{ file.title }}</strong>
+                </div>
+                <div
+                    v-if="file.type && file.size"
+                    class="text-xs"
+                >
+                    {{ file.type }},
+                    {{ file.size }}
+                </div>
+                <div
+                    class="error"
+                    v-if="file.getError()"
+                >
+                    {{ file.getError() }}
+                </div>
             </a>
-            <button
-                type="button"
-                @click="filePool.remove(file.id)"
-                :title="translations.get('deleteFile')"
-                class="action action-delete"
-                v-if="file.isUploaded && !isDeleting"
-            >
-                <i v-html="icon(faTrash).html"></i>
-            </button>
-            <button
-                type="button"
-                @click="file.restore()"
-                :title="translations.get('cancelDeletion')"
-                class="action action-restore"
-                v-if="isDeleting"
-            >
-                <i v-html="icon(faTrashRestore).html"></i>
-            </button>
+            <div class="actions" v-if="allowDelete">
+                <button
+                    :title="translations.get('editFile')"
+                    class="action action-edit"
+                    :class="{'--is-editing': isEditing}"
+                    v-if="allowEdit && file.isUploaded"
+                    @click="isEditing = !isEditing"
+                >
+                    <i v-html="icon(faPencil).html"></i>
+                </button>
+                <button
+                    type="button"
+                    @click="filePool.remove(file.id)"
+                    :title="translations.get('deleteFile')"
+                    class="action action-delete"
+                    v-if="file.isUploaded && !isDeleting"
+                >
+                    <i v-html="icon(faTrash).html"></i>
+                </button>
+                <button
+                    type="button"
+                    @click="file.restore()"
+                    :title="translations.get('cancelDeletion')"
+                    class="action action-restore"
+                    v-if="isDeleting"
+                >
+                    <i v-html="icon(faTrashRestore).html"></i>
+                </button>
+            </div>
         </div>
+        <FileEditor
+            :translations="translations"
+            :file="file"
+            v-if="isEditing"
+            :file-pool="filePool"
+            @saved="isEditing = false"
+        />
     </div>
 </template>
 
@@ -65,7 +74,10 @@ import FilePool from "../../Network/FilePool/FilePool";
 import Translation from "../../Utils/Translation";
 import {icon} from "@fortawesome/fontawesome-svg-core";
 import {faPencil, faTrash, faTrashRestore} from "@fortawesome/free-solid-svg-icons";
+import {ref} from "vue";
+import FileEditor from "./FileEditor.vue";
 
+const isEditing = ref(false);
 defineProps({
     file: {
         type: ServerFile,
@@ -95,12 +107,9 @@ defineProps({
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .file {
     position: relative;
-    display: flex;
-    justify-content: space-between;
-    gap: 3rem;
     border-radius: .65rem;
     border: 1px solid #c9c9c9;
     background-color: #fcfcfc;
@@ -110,6 +119,12 @@ defineProps({
         background-color: #f5fbff;
         border-color: #b4dbff;
     }
+}
+
+.file-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
 }
 
 .file-info {
@@ -161,7 +176,7 @@ defineProps({
         }
 
         &.action-edit {
-            &:hover {
+            &:hover, &.--is-editing {
                 border-color: orange;
                 color: orange;
                 background-color: #fffcf6;
@@ -170,10 +185,10 @@ defineProps({
     }
 }
 
-
 .file.--deleting, .file.--deleting:hover {
     background-color: #faf5ff;
     border-color: #ccaaf1;
+
     .file-info {
         color: #ba92e5;
     }

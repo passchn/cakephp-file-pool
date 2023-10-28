@@ -37,7 +37,7 @@ class FilePoolAssetsController extends AppController
     {
         $this->getRequest()->allowMethod(['post']);
 
-        $query = $this->FilePoolAssets->find()
+        $filePoolAssets = $this->FilePoolAssets->find()
             ->where([
                 'owner_id' => $this->getRequest()->getData('ownerId'),
                 'owner_source' => $this->getRequest()->getData('ownerModel'),
@@ -45,7 +45,6 @@ class FilePoolAssetsController extends AppController
             ->contain([
                 'Assets',
             ]);
-        $filePoolAssets = $this->paginate($query);
 
         return $this->getResponse()
             ->withStringBody((string)json_encode($filePoolAssets));
@@ -93,6 +92,39 @@ class FilePoolAssetsController extends AppController
             ],
         ]);
         $this->FilePoolAssets->saveOrFail($filePoolAsset);
+
+        return $this->getResponse()
+            ->withStringBody((string)json_encode($filePoolAsset));
+    }
+
+    /**
+     * Add method
+     *
+     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
+     */
+    public function edit()
+    {
+        $this->getRequest()->allowMethod(['post']);
+        $request = $this->getRequest();
+
+        $filePoolAsset = $this->FilePoolAssets->find()
+            ->where([
+                'FilePoolAssets.id' => $request->getData('fileId'),
+                'FilePoolAssets.owner_source' => $request->getData('ownerModel'),
+                'FilePoolAssets.owner_id' => $request->getData('ownerId'),
+            ])
+            ->contain(['Assets'])
+            ->firstOrFail();
+
+        $asset = $this->FilePoolAssets->Assets->get($filePoolAsset->asset_id);
+
+        $asset = $this->FilePoolAssets->Assets->patchEntity($asset, [
+            'title' => $request->getData('title'),
+            'category' => $request->getData('category'),
+            'description' => $request->getData('description'),
+        ]);
+
+        $this->FilePoolAssets->Assets->saveOrFail($asset);
 
         return $this->getResponse()
             ->withStringBody((string)json_encode($filePoolAsset));

@@ -38,6 +38,16 @@ export default class ServerFile
         return this.data.asset.title || this.data.asset.filename;
     }
 
+    public get category(): string|null
+    {
+        return this.data.asset.category;
+    }
+
+    public get description(): string|null
+    {
+        return this.data.asset.description;
+    }
+
     public get editLink(): string
     {
         return this.data.edit_link || '';
