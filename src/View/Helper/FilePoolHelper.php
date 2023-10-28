@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace FilePool\View\Helper;
 
 use Cake\Datasource\EntityInterface;
+use Cake\ORM\Entity;
 use Cake\View\Helper;
 
 /**
@@ -12,12 +13,15 @@ use Cake\View\Helper;
 class FilePoolHelper extends Helper
 {
     public function forEntity(
-        EntityInterface $entity,
+        Entity $entity,
         ?string $title = null,
         bool $allowDelete = false,
         bool $allowEdit = false,
         bool $allowUpload = false,
     ) {
+        if ($entity->isNew()) {
+            throw new \InvalidArgumentException(sprintf('file pool cannot be on an unsaved Entity'));
+        }
         return $this->getView()->element('FilePool.helper/FilePool', [
             'entity' => $entity,
             'allowDelete' => $allowDelete,
