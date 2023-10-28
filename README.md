@@ -45,7 +45,12 @@ bin/cake migrations migrate --plugin FilePool
 Use the `FilePool` helper for any Entity in a template:
 
 ```php
-<?= $this->FilePool->forEntity($content, title: 'File Pool', allowUpload: true) ?>
+<?= $this->FilePool->forEntity(
+  $entity,
+  title: 'File Pool',
+  allowUpload: true,
+  allowEdit: $currentUser->canEditFiles(),
+) ?>
 ```
 
 ## Usage notes
