@@ -1,14 +1,17 @@
 <template>
-    <div class="file">
+    <div
+        class="file"
+        :class="{'--deleting': isDeleting}"
+    >
         <a
             class="file-info"
-            :class="{ 'not-uploaded': !file.isUploaded, 'deleted': file.isDeleted }"
+            :class="{ 'not-uploaded': !file.isUploaded}"
             :href="file.downloadLink || '#'"
             :title="translations.get('openFile')"
             target="_blank"
         >
             <div>
-                {{ file.title }}
+                <strong>{{ file.title }}</strong>
             </div>
             <div
                 v-if="file.type && file.size"
@@ -39,7 +42,7 @@
                 @click="filePool.remove(file.id)"
                 :title="translations.get('deleteFile')"
                 class="action action-delete"
-                v-if="file.isUploaded"
+                v-if="file.isUploaded && !isDeleting"
             >
                 <i v-html="icon(faTrash).html"></i>
             </button>
@@ -48,7 +51,7 @@
                 @click="file.restore()"
                 :title="translations.get('cancelDeletion')"
                 class="action action-restore"
-                v-if="file.isDeleted"
+                v-if="isDeleting"
             >
                 <i v-html="icon(faTrashRestore).html"></i>
             </button>
@@ -83,8 +86,13 @@ defineProps({
     allowEdit: {
         type: Boolean,
         required: true,
-    }
+    },
+    isDeleting: {
+        type: Boolean,
+        required: true,
+    },
 });
+
 </script>
 
 <style scoped>
@@ -94,13 +102,16 @@ defineProps({
     justify-content: space-between;
     gap: 3rem;
     border-radius: .65rem;
-    border: 1px solid #777;
-    background-color: #fff;
+    border: 1px solid #c9c9c9;
+    background-color: #fcfcfc;
+    transition: background-color .1s ease-out;
+
     &:hover {
-        background-color: #e9f6ff;
-        border-color: dodgerblue;
+        background-color: #f5fbff;
+        border-color: #b4dbff;
     }
 }
+
 .file-info {
     display: block;
     text-decoration: none;
@@ -108,19 +119,17 @@ defineProps({
     padding: .5rem 1rem;
     flex-grow: 1;
 }
-.deleted {
-    border-color: #DC2626;
-}
+
 .actions {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: .25rem;
-    padding: .15rem .25rem;
+    padding: .25rem .3rem;
 
     .action {
-        background-color: whitesmoke;
-        border: 1px solid #eaeaea;
+        background-color: #fff;
+        border: 1px solid #c9c9c9;
         border-radius: .65rem;
         padding: .15rem;
         aspect-ratio: 1 / 1;
@@ -129,28 +138,47 @@ defineProps({
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        box-sizing: border-box;
 
         &.action-delete {
             &:hover {
-                color: #fff;
-                background-color: tomato;
+                color: tomato;
+                background-color: #fff6f4;
+                border-color: tomato;
             }
         }
+
         &.action-restore {
-            color: #fff;
-            background-color: rebeccapurple;
+            color: rebeccapurple;
+            border-color: rebeccapurple;
+            background-color: #eddcff;
+
             &:hover {
-                background-color: purple;
+                border-color: purple;
+                background-color: #f6c6f6;
+                color: purple;
             }
         }
+
         &.action-edit {
             &:hover {
-                background-color: #ffffc0;
+                border-color: orange;
                 color: orange;
+                background-color: #fffcf6;
             }
         }
     }
 }
+
+
+.file.--deleting, .file.--deleting:hover {
+    background-color: #faf5ff;
+    border-color: #ccaaf1;
+    .file-info {
+        color: #ba92e5;
+    }
+}
+
 .error {
     padding: 0.25rem;
     font-size: 0.75rem;

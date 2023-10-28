@@ -8,9 +8,9 @@ export default class FilePool {
     protected files: Map<string, ServerFile>;
     protected onUpdateCallbacks: Set<(files: Map<string, ServerFile>) => void>;
 
-    constructor(owner: { source: string, id: string }) {
-        this.ownerSource = owner.source;
-        this.ownerId = owner.id;
+    constructor(source: string, id: string) {
+        this.ownerSource = source;
+        this.ownerId = id;
         this.files = new Map();
         this.onUpdateCallbacks = new Set();
     }
@@ -35,9 +35,8 @@ export default class FilePool {
             }));
             this.update();
         }, (error) => {
-            console.error(error);
             const errorFile = this.files.get(tempId);
-            if (error !== undefined) {
+            if (errorFile !== undefined) {
                 errorFile.setError(error.message);
             }
             this.update();
@@ -45,9 +44,8 @@ export default class FilePool {
     }
 
     public remove(fileId: string) {
-
         const file = this.files.get(fileId);
-        file.startDeletionTimeout(3500).then(isDeleted => {
+        file?.startDeletionTimeout(3500).then(isDeleted => {
             if (!isDeleted) {
                 return;
             }

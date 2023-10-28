@@ -11,13 +11,17 @@
                 :file-pool="filePool"
                 :translations="translations"
                 :file="file"
+                :is-deleting="file.isDeleted"
             />
+            <p
+                v-if="files.length === 0 && !allowUpload"
+                v-text="translations.get('noFiles')"
+            ></p>
             <AddFileButton
                 v-if="allowUpload"
                 :on-select-handler="onSelectFile"
                 :button-label="translations.get('addFile')"
             />
-            <div v-if="files.length === 0 && !allowUpload" v-text="translations.get('noFiles')"></div>
         </div>
         <DragAndDropIndicator
             v-if="isOverDropZone && allowUpload"
@@ -38,10 +42,6 @@ import PoolFile from "./components/PoolFile.vue";
 import Translation from "../Utils/Translation";
 
 const props = defineProps({
-    owner: {
-        required: true,
-        type: Object,
-    },
     allowDelete: {
         required: true,
         type: Boolean,
@@ -57,26 +57,29 @@ const props = defineProps({
     translations: {
         required: true,
         type: Translation,
+    },
+    filePool: {
+        required: true,
+        type: FilePool,
     }
 });
 
 const dropzoneElement = ref<HTMLDivElement>();
-const filePool = new FilePool(props.owner as { source: string, id: string });
-const files = useServerFiles(filePool);
+const files = useServerFiles(props.filePool);
 
 const onDrop = (files: File[] | null) => {
     if (!props.allowUpload) {
         return;
     }
     files?.forEach((file) => {
-        filePool.add(file);
+        props.filePool.add(file);
     });
 }
 
 const onSelectFile = (form: HTMLFormElement) => {
     const formData = new FormData(form);
     const file = formData.get('file');
-    filePool.add(file as File);
+    props.filePool.add(file as File);
     form.value.reset();
 }
 
@@ -88,17 +91,13 @@ const {isOverDropZone} = useDropZone(dropzoneElement, onDrop);
 .file-pool {
     position: relative;
     isolation: isolate;
-    background-color: #f6f6f6;
-    border: 1px solid #dcdcdc;
-    border-radius: .25rem;
 }
 
 .files-list {
     position: relative;
-    padding: .45rem;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    gap: 0.45rem;
+    gap: 0.35rem;
 }
 </style>

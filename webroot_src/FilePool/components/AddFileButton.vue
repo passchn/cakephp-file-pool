@@ -39,26 +39,31 @@ defineProps({
 .form {
     display: contents;
 }
+
 .button {
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 0.5rem;
     cursor: pointer;
-    border: 1px solid #d9d9d9;
-    background-color: #deeeff;
-    padding: .15rem .45rem;
+    border: 1px solid #c9c9c9;
+    background-color: #f5f5f5;
+    padding: .45rem 2rem;
+    transition: background-color .1s ease-out;
+
     &:hover {
-        background-color: #fff;
-    border: 1px solid dodgerblue;
+        background-color: #ececec;
+        border: 1px solid #c9c9c9;
     }
 }
+
 .button-inner {
     display: flex;
     gap: 0.45rem;
     align-items: center;
     max-width: max-content;
 }
+
 .invisible {
     position: absolute;
     width: 1px;
@@ -70,6 +75,7 @@ defineProps({
     white-space: nowrap;
     border-width: 0;
 }
+
 .icon {
     font-size: 1.5rem;
     line-height: 2rem;
