@@ -29,7 +29,7 @@ class FilePoolHelper extends Helper
             'allowUpload' => $allowUpload,
             'title' => $title,
             'translations' => [
-                'dragAndDropText' => __d('FilePool', 'Drop file to upload'),
+                'dropFilesToUpload' => __d('FilePool', 'Drop files to upload'),
                 'editFile' => __d('FilePool', 'Edit file'),
                 'deleteFile' => __d('FilePool', 'Delete file'),
                 'cancelDeletion' => __d('FilePool', 'Cancel deletion'),

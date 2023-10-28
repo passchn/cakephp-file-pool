@@ -3,7 +3,10 @@
         ref="dropzoneElement"
         class="file-pool"
     >
-        <div class="files-list">
+        <div
+            class="files-list"
+            :class="{'--opacity': isOverDropZone}"
+        >
             <PoolFile
                 v-for="file in files"
                 :allow-edit="allowEdit"
@@ -25,7 +28,7 @@
         </div>
         <DragAndDropIndicator
             v-if="isOverDropZone && allowUpload"
-            v-text="translations.get('dragAndDropText')"
+            v-text="translations.get('dropFilesToUpload')"
         />
     </section>
 </template>
@@ -99,5 +102,9 @@ const {isOverDropZone} = useDropZone(dropzoneElement, onDrop);
     flex-direction: column;
     flex-wrap: wrap;
     gap: 0.35rem;
+    &.--opacity {
+        min-height: 6rem;
+        opacity: .45;
+    }
 }
 </style>

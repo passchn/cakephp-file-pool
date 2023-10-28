@@ -24,8 +24,9 @@ defineProps({
     justify-content: center;
     align-items: center;
     background-color: #d2e8ff;
+    border: 1px solid lightskyblue;
     border-radius: .5rem;
-    opacity: .75;
+    opacity: .85;
 }
 
 .text {

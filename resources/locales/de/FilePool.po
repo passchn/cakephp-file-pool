@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-10-28 20:33+0200\n"
-"PO-Revision-Date: 2023-10-28 20:38+0200\n"
+"POT-Creation-Date: 2023-10-28 23:22+0200\n"
+"PO-Revision-Date: 2023-10-28 23:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -15,8 +15,8 @@ msgstr ""
 "X-Generator: Poedit 3.4.1\n"
 
 #: vendor/passchn/cakephp-file-pool/src/View/Helper/FilePoolHelper.php:32
-msgid "Drop file to upload"
-msgstr "Datei hinzufügen"
+msgid "Drop files to upload"
+msgstr "Dateien hinzufügen"
 
 #: vendor/passchn/cakephp-file-pool/src/View/Helper/FilePoolHelper.php:33
 msgid "Edit file"
@@ -37,3 +37,7 @@ msgstr "Datei wählen"
 #: vendor/passchn/cakephp-file-pool/src/View/Helper/FilePoolHelper.php:37
 msgid "No files"
 msgstr "Keine Dateien"
+
+#: vendor/passchn/cakephp-file-pool/src/View/Helper/FilePoolHelper.php:38
+msgid "Open file"
+msgstr "Datei öffnen"

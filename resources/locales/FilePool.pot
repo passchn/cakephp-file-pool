@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-10-28 20:33+0200\n"
+"POT-Creation-Date: 2023-10-28 23:22+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: ./vendor/passchn/cakephp-file-pool/src/View/Helper/FilePoolHelper.php:32
-msgid "Drop file to upload"
+msgid "Drop files to upload"
 msgstr ""
 
 #: ./vendor/passchn/cakephp-file-pool/src/View/Helper/FilePoolHelper.php:33
@@ -36,5 +36,9 @@ msgstr ""
 
 #: ./vendor/passchn/cakephp-file-pool/src/View/Helper/FilePoolHelper.php:37
 msgid "No files"
+msgstr ""
+
+#: ./vendor/passchn/cakephp-file-pool/src/View/Helper/FilePoolHelper.php:38
+msgid "Open file"
 msgstr ""
 
