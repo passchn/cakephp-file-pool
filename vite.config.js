@@ -14,10 +14,11 @@ export default defineConfig({
             }
         }),
     ],
+    base: 'file_pool',
     build: {
         emptyOutDir: true,
         outDir: './webroot',
-        assetsDir: 'file_pool/assets',
+        assetsDir: 'assets',
         manifest: true,
         rollupOptions: {
             input: {
