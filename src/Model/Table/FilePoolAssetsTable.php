@@ -6,6 +6,7 @@ namespace FilePool\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
+use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use FilePool\Model\Entity\FilePoolAsset;
@@ -87,6 +88,11 @@ class FilePoolAssetsTable extends Table
             ->notEmptyString('sort');
 
         return $validator;
+    }
+
+    public function beforeFind(EventInterface $e, SelectQuery $query): SelectQuery
+    {
+        return $query->orderByAsc('sort');
     }
 
     public function beforeSave(EventInterface $event, FilePoolAsset $filePoolAsset, \ArrayObject $options): bool
