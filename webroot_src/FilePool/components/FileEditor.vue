@@ -8,7 +8,7 @@
             <fieldset :disabled="isSaving">
                 <label>
                     {{ translations.get('title') }} <br>
-                    <input type="text" name="title" :value="file.title">
+                    <input type="text" name="title" :value="file.title" minlength="1">
                 </label>
                 <label>
                     {{ translations.get('category') }} <br>
@@ -21,13 +21,14 @@
                 <button :disabled="isSaving" type="submit">{{ translations.get('save') }}</button>
             </fieldset>
         </form>
+        <div class="error" v-text="error" v-if="error"></div>
     </div>
 </template>
 
 <script setup lang="ts">
 import Translation from "../../Utils/Translation";
 import ServerFile from "../../Network/FilePool/ServerFile";
-import {ref} from "vue";
+import {Ref, ref} from "vue";
 import FilePool from "../../Network/FilePool/FilePool";
 
 const editForm = ref(null);
@@ -49,6 +50,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['saved']);
+const error: Ref<string|null> = ref(null);
 
 const onSubmit = () => {
     if (isSaving.value) {
@@ -65,11 +67,20 @@ const onSubmit = () => {
         return;
     }
     isSaving.value = true;
-    filePool.edit(id, formData).then(isSaved => {
-        if (isSaved) {
-            emit('saved');
-        }
-    });
+    filePool
+        .edit(id, {
+            title: formData.get('title'),
+            description: formData.get('description'),
+            category: formData.get('category'),
+        })
+        .then(isSaved => {
+            if (isSaved) {
+                emit('saved');
+                return;
+            }
+            error.value = 'could not save file';
+            isSaving.value = false;
+        });
 }
 
 </script>
@@ -104,8 +115,21 @@ form {
         cursor: pointer;
         background-color: #fff;
     }
+
     &.--saving {
         opacity: .65;
     }
+}
+
+.error {
+    margin-top: .5rem;
+    padding: 0.25rem .5rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    line-height: 1rem;
+    border-radius: .25rem;
+    color: #DC2626;
+    background-color: #fff0f0;
 }
 </style>

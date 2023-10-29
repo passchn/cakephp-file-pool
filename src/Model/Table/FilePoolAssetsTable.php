@@ -89,32 +89,81 @@ class FilePoolAssetsTable extends Table
         return $validator;
     }
 
-    public function beforeSave(EventInterface $event, FilePoolAsset $filePoolAsset, $options): bool
+    public function beforeSave(EventInterface $event, FilePoolAsset $filePoolAsset, \ArrayObject $options): bool
     {
-        $this->updateSort($filePoolAsset);
+        $updateSortForExisting = $options->offsetExists('updateSort') && $options->offsetGet('updateSort') === true;
+        $this->updateSort($filePoolAsset, $updateSortForExisting);
+
         return true;
     }
 
-    protected function updateSort(FilePoolAsset $filePoolAsset)
+    /**
+     * The method will set a sort index for new Entities by default.
+     *
+     * For existing Entities and their related Entities to be updated,
+     * the $updateSortForExisting flag must be set to true.
+     */
+    protected function updateSort(FilePoolAsset $filePoolAsset, bool $updateSortForExisting = false)
     {
         $conditions = [
             'owner_source' => $filePoolAsset->owner_source,
             'owner_id' => $filePoolAsset->owner_id,
         ];
 
-        if ($filePoolAsset->isNew()) {
+        $getHighestSort = function (array $conditions): ?int {
             /**
              * @var FilePoolAsset|null $highestSorted
              */
-            $highestSorted = $this->find()->where($conditions)->orderByDesc('sort')->first();
+            $highestSorted = $this->find()->where($conditions)
+                ->orderByDesc('sort')
+                ->first();
             if ($highestSorted === null) {
-                $filePoolAsset->sort = 1;
-                return;
+                return null;
             }
-            $filePoolAsset->sort = ($highestSorted->sort + 1);
+            return $highestSorted->sort;
+        };
+
+        if ($filePoolAsset->isNew()) {
+            $highestSort = $getHighestSort($conditions);
+            $filePoolAsset->sort = $highestSort !== null ? $highestSort + 1 : 1;
+            return;
+        }
+        if (!$updateSortForExisting) {
             return;
         }
 
-        // todo update sort for existing entities
+        $otherFilePoolAssets = $this->find()
+            ->where($conditions)
+            ->where(['id !=' => $filePoolAsset->id])
+            ->orderByAsc('sort');
+
+        $highestSort = $getHighestSort($conditions);
+        $targetSort = $filePoolAsset->sort;
+        if ($targetSort <= 0) {
+            $targetSort = 1;
+        }
+        if ($highestSort !== null && $highestSort < $targetSort) {
+            $targetSort = $highestSort;
+        }
+        $count = $otherFilePoolAssets->count();
+        if ($count < $targetSort) {
+            $targetSort = $count + 1;
+        }
+
+        $sort = 1;
+
+        /**
+         * @var FilePoolAsset $otherFilePoolAsset
+         */
+        foreach ($otherFilePoolAssets as $otherFilePoolAsset) {
+            if ($sort === $targetSort) {
+                $sort++;
+            }
+            $otherFilePoolAsset->sort = $sort;
+            $sort++;
+        }
+
+        $this->saveManyOrFail($otherFilePoolAssets);
+        $filePoolAsset->sort = $targetSort;
     }
 }

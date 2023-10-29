@@ -8,6 +8,7 @@ use App\Controller\AppController;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\InternalErrorException;
 use Cake\Utility\Text;
+use FilePool\Model\Entity\FilePoolAsset;
 use Nette\Utils\Strings;
 use Psr\Http\Message\UploadedFileInterface;
 
@@ -108,6 +109,9 @@ class FilePoolAssetsController extends AppController
         $this->getRequest()->allowMethod(['post']);
         $request = $this->getRequest();
 
+        /**
+         * @var FilePoolAsset $filePoolAsset
+         */
         $filePoolAsset = $this->FilePoolAssets->find()
             ->where([
                 'FilePoolAssets.id' => $request->getData('fileId'),
@@ -117,15 +121,18 @@ class FilePoolAssetsController extends AppController
             ->contain(['Assets'])
             ->firstOrFail();
 
-        $asset = $this->FilePoolAssets->Assets->get($filePoolAsset->asset_id);
-
-        $asset = $this->FilePoolAssets->Assets->patchEntity($asset, [
-            'title' => $request->getData('title'),
-            'category' => $request->getData('category'),
-            'description' => $request->getData('description'),
+        $filePoolAsset = $this->FilePoolAssets->patchEntity($filePoolAsset, [
+            'asset' => [
+                'title' => $request->getData('title', $filePoolAsset->asset->title),
+                'category' => $request->getData('category', $filePoolAsset->asset->category),
+                'description' => $request->getData('description', $filePoolAsset->asset->description),
+            ],
+            'sort' => $request->getData('sort', $filePoolAsset->sort),
         ]);
 
-        $this->FilePoolAssets->Assets->saveOrFail($asset);
+        $this->FilePoolAssets->saveOrFail($filePoolAsset, [
+            'updateSort' => $request->getData('sort') !== null,
+        ]);
 
         return $this->getResponse()
             ->withStringBody((string)json_encode($filePoolAsset));

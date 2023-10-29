@@ -83,6 +83,11 @@ export default class ServerFile
         return this._error;
     }
 
+    public get sort(): number
+    {
+        return this.data.sort || 0;
+    }
+
     public setError(error: string) {
         this._error = error;
     }

@@ -18,6 +18,8 @@
                 :is-deleting="file.isDeleted"
                 :error="file.error"
                 :is-uploading="!file.isUploaded && !file.error && !file.isDeleted"
+                :sort-update-handler="onUpdateSort"
+                :total-files-count="files.length"
             />
             <p
                 v-if="files.length === 0 && !allowUpload"
@@ -33,6 +35,12 @@
             v-if="isOverDropZone && allowUpload"
             v-text="translations.get('dropFilesToUpload')"
         />
+        <div
+            v-if="isUpdatingSort"
+            class="updating-sort-indicator"
+        >
+            <i class="icon" v-html="icon(faSpinner).html"></i>
+        </div>
     </section>
 </template>
 
@@ -46,6 +54,8 @@ import DragAndDropIndicator from "./components/DragAndDropIndicator.vue";
 import AddFileButton from "./components/AddFileButton.vue";
 import PoolFile from "./components/PoolFile.vue";
 import Translation from "../Utils/Translation";
+import {icon} from "@fortawesome/fontawesome-svg-core";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
 const props = defineProps({
     allowDelete: {
@@ -72,6 +82,7 @@ const props = defineProps({
 
 const dropzoneElement = ref<HTMLDivElement>();
 const files = useServerFiles(props.filePool);
+const isUpdatingSort = ref(false);
 
 const onDrop = (files: File[] | null) => {
     if (!props.allowUpload) {
@@ -90,6 +101,20 @@ const onSelectFile = (form: HTMLFormElement) => {
     filePool.add(file as File);
 }
 
+const onUpdateSort = (fileId: string, newSort: number) => {
+    const filePool = props.filePool as FilePool;
+    isUpdatingSort.value = true;
+    filePool
+        .edit(fileId, {
+            sort: newSort,
+        })
+        .then(() => {
+            setTimeout(() => {
+                isUpdatingSort.value = false;
+            }, 1000);
+        });
+}
+
 const {isOverDropZone} = useDropZone(dropzoneElement, onDrop);
 
 </script>
@@ -106,9 +131,35 @@ const {isOverDropZone} = useDropZone(dropzoneElement, onDrop);
     flex-direction: column;
     flex-wrap: wrap;
     gap: 0.35rem;
+
     &.--opacity {
         min-height: 6rem;
         opacity: .45;
+    }
+}
+
+.updating-sort-indicator {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(#555, .65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: #fff;
+    border-radius: .6rem;
+
+    .icon {
+        display: block;
+        animation: spin 1.5s linear infinite;
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
     }
 }
 </style>
