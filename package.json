@@ -1,6 +1,6 @@
 {
     "name": "cakephp-file-pool",
-    "version": "0.0.1",
+    "version": "0.3.2",
     "description": "FilePool plugin for CakePHP",
     "main": "./webroot_src/main.ts",
     "repository": "https://github.com/passchn/file-pool",

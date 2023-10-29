@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.3.2
+
+### Added
+
+* Option to define a custom viewBlock where the javascript is rendered. The config key is `FilePool.ViewBlock` which
+  defaults to `script`.
+
+## v0.3.1
+
+### Changed
+
+* FilePoolAssets are ordered by their sort index by default. See `FilePoolAssetsTable::beforeFind()`.
+
 ## v0.3.0
 
 ### Fixed
