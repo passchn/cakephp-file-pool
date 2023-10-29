@@ -8,6 +8,7 @@
             :class="{'--opacity': isOverDropZone}"
         >
             <PoolFile
+                v-if="files.length"
                 v-for="file in files"
                 :allow-edit="allowEdit"
                 :allow-delete="allowDelete"
@@ -15,6 +16,8 @@
                 :translations="translations"
                 :file="file"
                 :is-deleting="file.isDeleted"
+                :error="file.error"
+                :is-uploading="!file.isUploaded && !file.error"
             />
             <p
                 v-if="files.length === 0 && !allowUpload"
@@ -81,9 +84,10 @@ const onDrop = (files: File[] | null) => {
 
 const onSelectFile = (form: HTMLFormElement) => {
     const formData = new FormData(form);
+    form.reset();
     const file = formData.get('file');
-    props.filePool.add(file as File);
-    form.value.reset();
+    const filePool = props.filePool as FilePool;
+    filePool.add(file as File);
 }
 
 const {isOverDropZone} = useDropZone(dropzoneElement, onDrop);

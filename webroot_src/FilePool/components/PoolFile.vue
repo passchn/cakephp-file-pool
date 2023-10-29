@@ -23,12 +23,13 @@
                 </div>
                 <div
                     class="error"
-                    v-if="file.getError()"
+                    v-if="error"
                 >
-                    {{ file.getError() }}
+                    <i v-html="icon(faCircleXmark).html"></i>
+                    <span v-text="error"></span>
                 </div>
             </a>
-            <div class="actions" v-if="allowDelete">
+            <div class="actions" v-if="!error && (allowDelete || allowEdit)">
                 <button
                     :title="translations.get('editFile')"
                     class="action action-edit"
@@ -43,7 +44,7 @@
                     @click="filePool.remove(file.id)"
                     :title="translations.get('deleteFile')"
                     class="action action-delete"
-                    v-if="file.isUploaded && !isDeleting"
+                    v-if="allowDelete && file.isUploaded && !isDeleting"
                 >
                     <i v-html="icon(faTrash).html"></i>
                 </button>
@@ -65,6 +66,12 @@
             :file-pool="filePool"
             @saved="isEditing = false"
         />
+        <div
+            v-if="isUploading"
+            class="uploading-hint"
+        >
+            <i class="icon" v-html="icon(faSpinner).html"></i>
+        </div>
     </div>
 </template>
 
@@ -73,7 +80,7 @@ import ServerFile from "../../Network/FilePool/ServerFile";
 import FilePool from "../../Network/FilePool/FilePool";
 import Translation from "../../Utils/Translation";
 import {icon} from "@fortawesome/fontawesome-svg-core";
-import {faPencil, faTrash, faTrashRestore} from "@fortawesome/free-solid-svg-icons";
+import {faCircleXmark, faPencil, faSpinner, faTrash, faTrashRestore} from "@fortawesome/free-solid-svg-icons";
 import {ref} from "vue";
 import FileEditor from "./FileEditor.vue";
 
@@ -103,6 +110,14 @@ defineProps({
         type: Boolean,
         required: true,
     },
+    error: {
+        type: String,
+        required: true,
+    },
+    isUploading: {
+        type: Boolean,
+        required: true,
+    }
 });
 
 </script>
@@ -110,6 +125,7 @@ defineProps({
 <style lang="scss" scoped>
 .file {
     position: relative;
+    isolation: isolate;
     border-radius: .65rem;
     border: 1px solid #c9c9c9;
     background-color: #fcfcfc;
@@ -197,8 +213,37 @@ defineProps({
 .error {
     padding: 0.25rem;
     font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
     line-height: 1rem;
+    border-radius: .25rem;
     color: #DC2626;
-    background-color: #FEE2E2;
+    background-color: #fff0f0;
+}
+
+.uploading-hint {
+    position: absolute;
+    cursor: wait;
+    inset: 0;
+    border-radius: .6rem;
+    background-color: rgba(#555, .65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #fff;
+    .icon {
+        display: block;
+        animation: spin 1.5s linear infinite;
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    }
 }
 </style>

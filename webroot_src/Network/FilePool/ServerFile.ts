@@ -3,7 +3,7 @@ export default class ServerFile
 
     protected data: any;
     protected info: ServerFileInfo;
-    protected error: string|null = null;
+    protected _error: string|null = null;
     protected _isDeleted: Boolean;
     protected deletionTimeouts = new Set<number>();
 
@@ -78,13 +78,13 @@ export default class ServerFile
         return this._isDeleted && !this.info.isUploaded;
     }
 
-    public getError(): string|null
+    public get error(): string|null
     {
-        return this.error;
+        return this._error;
     }
 
     public setError(error: string) {
-        this.error = error;
+        this._error = error;
     }
 
     public startDeletionTimeout(timeout: number): Promise<Boolean>
