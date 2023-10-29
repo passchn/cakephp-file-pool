@@ -166,6 +166,7 @@ defineProps({
         aspect-ratio: 1 / 1;
         display: flex;
         height: 100%;
+        max-height: 2.75rem;
         align-items: center;
         justify-content: center;
         cursor: pointer;

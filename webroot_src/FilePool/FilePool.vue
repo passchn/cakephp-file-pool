@@ -17,7 +17,7 @@
                 :file="file"
                 :is-deleting="file.isDeleted"
                 :error="file.error"
-                :is-uploading="!file.isUploaded && !file.error"
+                :is-uploading="!file.isUploaded && !file.error && !file.isDeleted"
             />
             <p
                 v-if="files.length === 0 && !allowUpload"
