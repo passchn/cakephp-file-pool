@@ -13,7 +13,7 @@ use ViteHelper\Utilities\ViteHelperConfig;
 
 
 if (!$this->helpers()->has('ViteScripts')) {
-    $this->addHelper('ViteHelper.ViteScripts');
+    $this->loadHelper('ViteHelper.ViteScripts');
 }
 
 $this->ViteScripts->script([], new ViteHelperConfig([
