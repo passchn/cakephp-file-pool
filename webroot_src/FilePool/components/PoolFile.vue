@@ -213,9 +213,11 @@ const props = defineProps({
     button {
         padding: 0 .25rem;
         font-size: .75rem;
+
         &:not(:disabled):hover {
             color: dodgerblue;
         }
+
         &:disabled {
             color: #777;
             cursor: not-allowed;
@@ -236,6 +238,7 @@ const props = defineProps({
     padding: .5rem .6rem;
     flex-grow: 1;
     max-width: max-content;
+
     &:hover {
         color: dodgerblue;
     }
@@ -298,6 +301,13 @@ const props = defineProps({
 
     .file-info {
         color: #ba92e5;
+    }
+
+    .file-header {
+        background-color: #d9c7f3;
+        .file-meta {
+            color: #333;
+        }
     }
 }
 
