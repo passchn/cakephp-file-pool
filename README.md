@@ -5,6 +5,14 @@ Gives you a fast and simple way to add files to entities.
 > [!NOTE]
 > This is an extension to the [passchn/cakephp-assets](https://packagist.org/packages/passchn/cakephp-assets) plugin.
 
+**Features:**
+
+* No-config FilePool widget (through a ViewHelper) for any Entity you have 
+* Possibility to upload, sort, edit or delete files from within the widget 
+* Drag and drop functionality to upload multiple files 
+* You can easily control if a visitor can upload, edit or delete items 
+* Translations in english and german
+
 ## Prerequisites
 
 Follow the installation guide for [passchn/cakephp-assets](https://packagist.org/packages/passchn/cakephp-assets)
@@ -53,14 +61,15 @@ Use the `FilePool` helper for any Entity in a template:
 ) ?>
 ```
 
-## Usage notes
+You can easily define Relations to the entity in your `ExamplesTable`:
 
-The plugin might not be ready for your setup. It was copy-pasted from one of my personal projects to be installed in
-another one.
+```php
+$this->hasMany('Downloads', ['foreignKey' => 'owner_id'])
+    ->setConditions(['owner_source' => 'Examples'])
+    ->setClassName('FilePool.FilePoolAssets');
+```
 
-E.g., the Vue App uses TailwindCSS, so Styles might not be applied.
-
-I am working on making the plugin a bit more usable for other apps and so use css which is scoped to the file pool app.
+… and then access the files through `$example->downloads`  after containing `Downloads.Assets` in your Controller.
 
 ## Contribution
 
