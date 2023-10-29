@@ -40,6 +40,8 @@ class FilePoolHelper extends Helper
                 'category' => __d('FilePool', 'Category'),
                 'description' => __d('FilePool', 'Description'),
                 'save' => __d('FilePool', 'Save'),
+                'sortUp' => __d('FilePool', 'Sort up'),
+                'sortDown' => __d('FilePool', 'Sort down'),
             ],
         ]);
     }

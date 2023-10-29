@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-10-29 01:02+0200\n"
-"PO-Revision-Date: 2023-10-29 01:04+0200\n"
+"POT-Creation-Date: 2023-10-29 13:44+0100\n"
+"PO-Revision-Date: 2023-10-29 13:45+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -57,3 +57,11 @@ msgstr "Beschreibung"
 #: vendor/passchn/cakephp-file-pool/src/View/Helper/FilePoolHelper.php:42
 msgid "Save"
 msgstr "Speichern"
+
+#: vendor/passchn/cakephp-file-pool/src/View/Helper/FilePoolHelper.php:43
+msgid "Sort up"
+msgstr "Nach oben schieben"
+
+#: vendor/passchn/cakephp-file-pool/src/View/Helper/FilePoolHelper.php:44
+msgid "Sort down"
+msgstr "Nach unten schieben"
