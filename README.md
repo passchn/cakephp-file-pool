@@ -7,10 +7,10 @@ Gives you a fast and simple way to add files to entities.
 
 **Features:**
 
-* No-config FilePool widget (through a ViewHelper) for any Entity you have 
-* Possibility to upload, sort, edit or delete files from within the widget 
-* Drag and drop functionality to upload multiple files 
-* You can easily control if a visitor can upload, edit or delete items 
+* No-config FilePool widget (through a ViewHelper) for any Entity you have
+* Possibility to upload, sort, edit or delete files from within the widget
+* Drag and drop functionality to upload multiple files
+* You can easily control if a visitor can upload, edit or delete items
 * Translations in english and german
 
 ## Prerequisites
@@ -61,7 +61,7 @@ Use the `FilePool` helper for any Entity in a template:
 ) ?>
 ```
 
-### Define relations 
+### Define relations
 
 You can easily define Relations to the entity in your `ExamplesTable`:
 
@@ -73,9 +73,11 @@ $this->hasMany('Downloads', ['foreignKey' => 'owner_id'])
 
 … and then access the files through `$example->downloads`  after containing `Downloads.Assets` in your Controller.
 
-### Rendering the Widget
+## Troubleshooting
 
-If the widget does not show up, make sure you are fetching scripts somewhere in your template: 
+### Widget is not rendering
+
+If the widget does not show up, make sure you are fetching scripts somewhere in your template:
 
 ```php
 <?= $this->fetch('script') ?>
@@ -84,8 +86,28 @@ If the widget does not show up, make sure you are fetching scripts somewhere in 
 You can change the viewBlock the plugin is using via the `'FilePool.ViewBlock'` config, e.g. in your `app.php`.
 
 > [!IMPORTANT]  
-> Scripts should be fetched at the end of your html. Styles will be loaded via JavaScript. 
+> Scripts should be fetched at the end of your html. Styles will be loaded via JavaScript.
+
+### Widget is getting 403 responses (CSRF)
+
+The widget's client uses CakePHP's default csrf cookie name (`csrfToken`) and header name (`X-CSRF-Token`).
+
+If you did not change your config, check if the `CsrfProtectionMiddleware` is configured with `httponly` set to `false`.
+This is necessary because JavaScript won't have access to the cookie otherwise:
+
+```php
+->add(new CsrfProtectionMiddleware([
+    'httponly' => false,
+    // ...
+]))
+```
+
+**Note:** If you change these settings, make sure to remove your old `csrfToken` cookie in your browser's Dev tools. The
+changes might otherwise not work immediately as the old cookie is still set to `httponly` and will not be replaced
+automatically.
 
 ## Contribution
 
 You are welcome to open Issues or Pull Requests.
+
+If you had issues installing or using the plugin, tell me about it and I will update the Troubleshooting section.
