@@ -48,6 +48,10 @@ class FilePoolAssetsTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        foreach (Configure::read('FilePool.FilePoolAssetsTable.Behaviors', []) as $behavior) {
+            $this->addBehavior($behavior);
+        }
+
         $this->belongsTo('Assets', [
             'foreignKey' => 'asset_id',
             'className' => 'Assets.Assets'
