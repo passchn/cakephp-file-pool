@@ -61,6 +61,8 @@ Use the `FilePool` helper for any Entity in a template:
 ) ?>
 ```
 
+### Define relations 
+
 You can easily define Relations to the entity in your `ExamplesTable`:
 
 ```php
@@ -70,6 +72,19 @@ $this->hasMany('Downloads', ['foreignKey' => 'owner_id'])
 ```
 
 … and then access the files through `$example->downloads`  after containing `Downloads.Assets` in your Controller.
+
+### Rendering the Widget
+
+If the widget does not show up, make sure you are fetching scripts somewhere in your template: 
+
+```php
+<?= $this->fetch('script') ?>
+```
+
+You can change the viewBlock the plugin is using via the `'FilePool.ViewBlock'` config, e.g. in your `app.php`.
+
+> [!IMPORTANT]  
+> Scripts should be fetched at the end of your html. Styles will be loaded via JavaScript. 
 
 ## Contribution
 

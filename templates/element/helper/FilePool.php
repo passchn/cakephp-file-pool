@@ -25,7 +25,10 @@ $this->ViteScripts->script([], new ViteHelperConfig([
         ],
         // url of the vite dev server
         'url' => 'http://localhost:3001',
-    ]
+    ],
+    'viewBlocks' => [
+        'script' => \Cake\Core\Configure::read('FilePool.ViewBlock', 'script'),
+    ],
 ]));
 
 ?>
