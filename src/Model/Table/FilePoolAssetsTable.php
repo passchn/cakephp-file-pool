@@ -66,7 +66,8 @@ class FilePoolAssetsTable extends Table
             ->notEmptyString('owner_source');
 
         $validator
-            ->uuid('owner_id')
+            ->scalar('owner_id')
+            ->maxLength('owner_id', 255)
             ->requirePresence('owner_id', 'create')
             ->notEmptyString('owner_id');
 
