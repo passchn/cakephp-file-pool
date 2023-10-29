@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace FilePool\Model\Entity;
 
 use Cake\Core\Configure;
+use Cake\I18n\FrozenDate;
 use Cake\ORM\Entity;
 use Cake\Routing\Router;
 
@@ -15,8 +16,8 @@ use Cake\Routing\Router;
  * @property string $owner_id
  * @property string $asset_id
  * @property int $sort
- * @property \Cake\I18n\DateTime $created
- * @property \Cake\I18n\DateTime $modified
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \Assets\Model\Entity\Asset $asset
  *
@@ -35,7 +36,7 @@ class FilePoolAsset extends Entity
      *
      * @var array<string, bool>
      */
-    protected array $_accessible = [
+    protected $_accessible = [
         'owner_source' => true,
         'owner_id' => true,
         'asset_id' => true,
@@ -45,7 +46,7 @@ class FilePoolAsset extends Entity
         'asset' => true,
     ];
 
-    protected array $_virtual = [
+    protected $_virtual = [
         'nice_filesize',
         'download_link',
         'edit_link',
