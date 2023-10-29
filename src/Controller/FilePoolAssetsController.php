@@ -24,9 +24,11 @@ class FilePoolAssetsController extends AppController
     {
         parent::beforeFilter($event);
 
-        $this->FormProtection->setConfig('unlockedActions', [
-            'index', 'add', 'view', 'edit', 'delete',
-        ]);
+        if ($this->components()->has('FormProtection')) {
+            $this->FormProtection->setConfig('unlockedActions', [
+                'index', 'add', 'view', 'edit', 'delete',
+            ]);
+        }
     }
 
     /**
