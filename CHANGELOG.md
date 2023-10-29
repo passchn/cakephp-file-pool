@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.3
+
+### Fixed
+
+* `FilePoolAssetsController::initialize()` checks if the `FormProtectionComponent` is loaded before applying settings.
+  The component is not loaded by default in `cakephp/app`.
+* The `ViteHelper` to load the bundles was loaded incorrectly if not loaded by the app anyway. It now
+  uses `View::loadHelper()` instead of `View::addHelper()`.
+
 ## v0.3.2
 
 ### Added
