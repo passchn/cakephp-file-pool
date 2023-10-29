@@ -39,12 +39,13 @@ class FilePoolAssetsController extends AppController
 
         $filePoolAssets = $this->FilePoolAssets->find()
             ->where([
-                'owner_id' => $this->getRequest()->getData('ownerId'),
-                'owner_source' => $this->getRequest()->getData('ownerModel'),
+                'FilePoolAssets.owner_id' => $this->getRequest()->getData('ownerId'),
+                'FilePoolAssets.owner_source' => $this->getRequest()->getData('ownerModel'),
             ])
             ->contain([
                 'Assets',
-            ]);
+            ])
+            ->orderByAsc('FilePoolAssets.sort');
 
         return $this->getResponse()
             ->withStringBody((string)json_encode($filePoolAssets));

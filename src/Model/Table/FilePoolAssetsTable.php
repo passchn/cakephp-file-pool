@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace FilePool\Model\Table;
 
+use Cake\Core\Configure;
+use Cake\Event\EventInterface;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use FilePool\Model\Entity\FilePoolAsset;
 
 /**
  * FilePoolAssets Model
@@ -80,5 +83,34 @@ class FilePoolAssetsTable extends Table
             ->notEmptyString('sort');
 
         return $validator;
+    }
+
+    public function beforeSave(EventInterface $event, FilePoolAsset $filePoolAsset, $options): bool
+    {
+        $this->updateSort($filePoolAsset);
+        return true;
+    }
+
+    protected function updateSort(FilePoolAsset $filePoolAsset)
+    {
+        $conditions = [
+            'owner_source' => $filePoolAsset->owner_source,
+            'owner_id' => $filePoolAsset->owner_id,
+        ];
+
+        if ($filePoolAsset->isNew()) {
+            /**
+             * @var FilePoolAsset|null $highestSorted
+             */
+            $highestSorted = $this->find()->where($conditions)->orderByDesc('sort')->first();
+            if ($highestSorted === null) {
+                $filePoolAsset->sort = 1;
+                return;
+            }
+            $filePoolAsset->sort = ($highestSorted->sort + 1);
+            return;
+        }
+
+        // todo update sort for existing entities
     }
 }
