@@ -46,7 +46,7 @@ class FilePoolAssetsController extends AppController
             ->contain([
                 'Assets',
             ])
-            ->orderByAsc('FilePoolAssets.sort');
+            ->orderAsc('FilePoolAssets.sort');
 
         return $this->getResponse()
             ->withStringBody((string)json_encode($filePoolAssets));

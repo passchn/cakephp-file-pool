@@ -92,7 +92,7 @@ class FilePoolAssetsTable extends Table
 
     public function beforeFind(EventInterface $e, SelectQuery $query): SelectQuery
     {
-        return $query->orderByAsc('sort');
+        return $query->orderAsc('sort');
     }
 
     public function beforeSave(EventInterface $event, FilePoolAsset $filePoolAsset, \ArrayObject $options): bool
@@ -121,7 +121,7 @@ class FilePoolAssetsTable extends Table
              * @var FilePoolAsset|null $highestSorted
              */
             $highestSorted = $this->find()->where($conditions)
-                ->orderByDesc('sort')
+                ->orderDesc('sort')
                 ->first();
             if ($highestSorted === null) {
                 return null;
@@ -141,7 +141,7 @@ class FilePoolAssetsTable extends Table
         $otherFilePoolAssets = $this->find()
             ->where($conditions)
             ->where(['id !=' => $filePoolAsset->id])
-            ->orderByAsc('sort');
+            ->orderAsc('sort');
 
         $highestSort = $getHighestSort($conditions);
         $targetSort = $filePoolAsset->sort;
