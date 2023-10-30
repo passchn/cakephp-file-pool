@@ -9,28 +9,14 @@
  * @var array $translations
  */
 
-use ViteHelper\Utilities\ViteHelperConfig;
-
+use Cake\Core\Configure;
 
 if (!$this->helpers()->has('ViteScripts')) {
     $this->loadHelper('ViteHelper.ViteScripts');
 }
-
-$this->ViteScripts->script([], new ViteHelperConfig([
-    'forceProductionMode' => 1,
-    'plugin' => 'FilePool',
-    'development' => [
-        'scriptEntries' => [
-            \Cake\Core\Plugin::path('FilePool') . 'webroot_src/main.ts',
-        ],
-        // url of the vite dev server
-        'url' => 'http://localhost:3001',
-    ],
-    'viewBlocks' => [
-        'script' => \Cake\Core\Configure::read('FilePool.ViewBlock', 'script'),
-    ],
-]));
-
+$this->ViteScripts->pluginScript('FilePool', options: [
+    'block' => Configure::read('FilePool.ViewBlock', 'script'),
+]);
 ?>
 
 <fieldset class="file-pool-wrapper">
