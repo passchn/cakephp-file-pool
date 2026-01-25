@@ -6,8 +6,8 @@
     "require": {
         "php": ">=8.2",
         "cakephp/cakephp": "^5.1",
-        "passchn/cakephp-assets": "^0.6",
-        "passchn/cakephp-vite": "^2.2"
+        "passchn/cakephp-assets": "^0.6.1",
+        "passchn/cakephp-vite": "dev-cake5-next"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.1"
