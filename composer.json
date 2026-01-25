@@ -6,7 +6,7 @@
     "require": {
         "php": ">=8.2",
         "cakephp/cakephp": "^5.1",
-        "passchn/cakephp-assets": "dev-feature-intervention-v3",
+        "passchn/cakephp-assets": "^0.6",
         "passchn/cakephp-vite": "^2.2"
     },
     "require-dev": {
