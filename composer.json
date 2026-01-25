@@ -4,9 +4,9 @@
     "type": "cakephp-plugin",
     "license": "MIT",
     "require": {
-        "php": ">=8.1",
-        "cakephp/cakephp": "^5.0",
-        "passchn/cakephp-assets": "^0.5.2",
+        "php": ">=8.2",
+        "cakephp/cakephp": "^5.1",
+        "passchn/cakephp-assets": "^0.6",
         "passchn/cakephp-vite": "^2.2"
     },
     "require-dev": {
