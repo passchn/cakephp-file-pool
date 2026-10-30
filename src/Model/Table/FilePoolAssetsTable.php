@@ -90,11 +90,6 @@ class FilePoolAssetsTable extends Table
         return $validator;
     }
 
-    public function beforeFind(EventInterface $e, SelectQuery $query): SelectQuery
-    {
-        return $query->orderByAsc('FilePoolAssets.sort');
-    }
-
     public function beforeSave(EventInterface $event, FilePoolAsset $filePoolAsset, \ArrayObject $options): bool
     {
         $updateSortForExisting = $options->offsetExists('updateSort') && $options->offsetGet('updateSort') === true;
