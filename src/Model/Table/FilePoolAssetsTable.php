@@ -92,7 +92,7 @@ class FilePoolAssetsTable extends Table
 
     public function beforeFind(EventInterface $e, SelectQuery $query): SelectQuery
     {
-        return $query->orderByAsc('sort');
+        return $query->orderByAsc('FilePoolAssets.sort');
     }
 
     public function beforeSave(EventInterface $event, FilePoolAsset $filePoolAsset, \ArrayObject $options): bool
