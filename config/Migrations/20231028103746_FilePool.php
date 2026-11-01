@@ -1,9 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use Migrations\AbstractMigration;
-
-class FilePool extends AbstractMigration
+class FilePool extends \Migrations\BaseMigration
 {
     /**
      * Up Method.

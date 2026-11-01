@@ -1,9 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use Migrations\AbstractMigration;
-
-class FixOwnerIdField extends AbstractMigration
+class FixOwnerIdField extends \Migrations\BaseMigration
 {
     /**
      * Up Method.
